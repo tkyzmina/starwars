@@ -1,10 +1,10 @@
 import React from "react";
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 
-function Character({name}) {
+function Character({ name }) {
   return (
     <ListItem disablePadding>
-      <ListItemButton component="a" href="#simple-list">
+      <ListItemButton component="div">
         <ListItemText primary={name} />
       </ListItemButton>
     </ListItem>

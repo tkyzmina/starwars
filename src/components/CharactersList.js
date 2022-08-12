@@ -6,7 +6,7 @@ function CharactersList({ characters }) {
   return (
     <List>
       {characters.map((character) => {
-        const { name, url } = character;
+        const { name, url } = character;     
         return <Character name={name} key={url} />;
       })}
     </List>

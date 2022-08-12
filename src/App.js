@@ -1,48 +1,25 @@
+import { fetchCharacters } from "./services/api";
 import { useState, useEffect } from "react";
-import { Typography, Container, Skeleton } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import CharactersList from "./components/CharactersList";
+import Loading from "./components/Loading";
 const url = "https://swapi.dev/api/people";
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchCharacters = async () => {
-    setLoading(true);
-    const response = await fetch(url);
-    const data = await response.json();
-    setCharacters(data.results);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    fetchCharacters();
+    fetchCharacters(url, setLoading, setCharacters);
   }, []);
 
   if (loading) {
-    return (
-      <Container>
-        <Typography variant="h4" component="h1" align="center" sx={{ mb: 4 }}>
-          Loading...
-        </Typography>
-        {[...Array(8)].map((item, index) => {
-          return (
-            <Skeleton
-              variant="rounded"
-              height={40}
-              sx={{ mb: 2, width: 1 }}
-              key={index}
-            />
-          );
-        })}
-      </Container>
-    );
+    return <Loading />;
   }
+
   return (
     <div className="App">
       <Container>
-        {" "}
-        {}
         <Typography variant="h4" component="h1" align="center" sx={{ mb: 4 }}>
           Список людей
         </Typography>
