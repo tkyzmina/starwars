@@ -74,8 +74,12 @@ function App() {
         <Typography variant="h4" component="h1" align="center" sx={{ mb: 4 }}>
           Список людей
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={8}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ flexDirection: { xs: "column", sm: "row" } }}
+        >
+          <Grid item xs={12} sm={8} sx={{ order: { xs: 2, sm: 1 } }}>
             <Search
               handleInput={handleInput}
               handleSubmit={handleSubmit}
@@ -88,7 +92,7 @@ function App() {
               activeListItem={activeListItem}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4} sx={{ order: { xs: 1, sm: 2 } }}>
             <CharacterInfo character={selectedCharacter} />
           </Grid>
         </Grid>
