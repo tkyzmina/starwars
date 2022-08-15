@@ -1,10 +1,16 @@
 import React from "react";
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 
-function Character({ name }) {
+function Character({ character, click, activeListItem }) {
+  const { name, url } = character;
   return (
-    <ListItem disablePadding>
-      <ListItemButton component="div">
+    <ListItem disablePadding selected={activeListItem === url}>
+      <ListItemButton
+        component="button"
+        onClick={() => {
+          click(url);
+        }}
+      >
         <ListItemText primary={name} />
       </ListItemButton>
     </ListItem>
