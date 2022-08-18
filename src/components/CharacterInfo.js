@@ -11,17 +11,14 @@ import {
 } from "@mui/material";
 
 function CharacterInfo({ character }) {
-  const { birth_year, eye_color, height, name, skin_color, url } = character;
-
-  let urlId = url.trim().split("/");
-  urlId = parseInt(urlId[5]);
+  const { birth_year, eye_color, height, name, skin_color, id} = character;
 
   return (
     <Card>
       <CardMedia
         component="img"
         height="378"
-        image={`https://starwars-visualguide.com/assets/img/characters/${urlId}.jpg`}
+        image={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
         alt={name}
       />
       <CardContent>

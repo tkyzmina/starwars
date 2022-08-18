@@ -1,5 +1,5 @@
 import { useFetch } from "./services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Container, Grid } from "@mui/material";
 
 import CharactersList from "./components/CharactersList";
@@ -10,9 +10,9 @@ import Search from "./components/Search";
 const BASE_URL = "https://swapi.dev/api/people";
 
 function App() {
-  const [activeListItem, setActiveListItem] = useState(
-    "https://swapi.dev/api/people/1/"
-  );
+  const { loading, data } = useFetch(BASE_URL);
+  const [characters, setCharacters] = useState([]);
+  const [activeListItem, setActiveListItem] = useState("1");
   const [inputError, setInputError] = useState(false);
   const [inputValue, setInputaValue] = useState("");
   const [selectedCharacter, setSelectedCharacter] = useState({
@@ -24,16 +24,25 @@ function App() {
     mass: "77",
     skin_color: "fair",
     url: "https://swapi.dev/api/people/1/",
+    id: 1,
   });
-  const { loading, characters } = useFetch(BASE_URL);
 
-  const showCharacterData = (itemUrl) => {
-    let selectedCharacter = characters.filter((item) => {
-      return item.url === itemUrl;
+  useEffect(() => {
+    const regexp = /(\d+)\//i;
+    const characters = data.map((item) => {
+      const urlNum = item.url.match(regexp)[1];
+      return { ...item, id: urlNum };
     });
-    ///???!
+    setCharacters(characters);
+  }, [data]);
+
+  const showCharacterData = (id) => {
+    let selectedCharacter = characters.filter((item) => {
+      return item.id === id;
+    });
+
     setSelectedCharacter(selectedCharacter[0]);
-    setActiveListItem(itemUrl);
+    setActiveListItem(id);
   };
 
   const handleInput = (e) => {
@@ -59,7 +68,7 @@ function App() {
       return;
     } else {
       setSelectedCharacter(searchResult[0]);
-      setActiveListItem(searchResult[0].url);
+      setActiveListItem(searchResult[0].id);
       setInputaValue("");
     }
   };
