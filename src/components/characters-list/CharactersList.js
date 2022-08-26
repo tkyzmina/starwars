@@ -1,8 +1,16 @@
 import React from "react";
 import { List } from "@mui/material";
-import Character from "./Character";
+import Character from "../character/Character";
 
-function CharactersList({ characters, click, activeListItem }) {
+function CharactersList({ characters, onClick, activeListItem }) {
+  const handleClick = (id) => {
+    let selectedCharacter = characters.filter((item) => {
+      return item.id === id;
+    });
+
+    onClick(selectedCharacter[0]);
+  };
+
   return (
     <List>
       {characters.map((character) => {
@@ -10,7 +18,7 @@ function CharactersList({ characters, click, activeListItem }) {
           <Character
             character={character}
             key={character.id}
-            click={click}
+            onClick={() => handleClick(character.id)}
             activeListItem={activeListItem}
           />
         );

@@ -9,7 +9,18 @@ export const useFetch = (url) => {
       setLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      setData(data.results);
+      setData(
+        data.results.map((item) => {
+          return {
+            name: item.name,
+            birthYear: item.birth_year,
+            skinColor: item.skin_color,
+            eyeColor: item.eye_color,
+            height: item.height,
+            url: item.url,
+          };
+        })
+      );
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -22,3 +33,5 @@ export const useFetch = (url) => {
 
   return { loading, data };
 };
+
+export const BASE_URL = "https://swapi.dev/api/people";

@@ -1,31 +1,21 @@
+import { BASE_URL } from "./services/api";
 import { useFetch } from "./services/api";
 import { useEffect, useState } from "react";
 import { Typography, Container, Grid } from "@mui/material";
 
-import CharactersList from "./components/CharactersList";
-import Loading from "./components/Loading";
-import CharacterInfo from "./components/CharacterInfo";
-import Search from "./components/Search";
-
-const BASE_URL = "https://swapi.dev/api/people";
+import CharactersList from "./components/characters-list/CharactersList";
+import Loading from "./components/loading/Loading";
+import CharacterInfo from "./components/character-info/CharacterInfo";
+import Search from "./components/search/Search";
 
 function App() {
   const { loading, data } = useFetch(BASE_URL);
+
   const [characters, setCharacters] = useState([]);
-  const [activeListItem, setActiveListItem] = useState("1");
-  const [inputError, setInputError] = useState(false);
-  const [inputValue, setInputaValue] = useState("");
-  const [selectedCharacter, setSelectedCharacter] = useState({
-    birth_year: "19BBY",
-    eye_color: "blue",
-    gender: "male",
-    height: "172",
-    name: "Luke Skywalker",
-    mass: "77",
-    skin_color: "fair",
-    url: "https://swapi.dev/api/people/1/",
-    id: 1,
-  });
+  const [currentCharacters, setCurrentCharacters] = useState([]);
+  const [selectedCharacter, setSelectedCharacter] = useState({});
+  const [activeListItem, setActiveListItem] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const regexp = /(\d+)\//i;
@@ -34,43 +24,27 @@ function App() {
       return { ...item, id: urlNum };
     });
     setCharacters(characters);
+    setCurrentCharacters(characters);
   }, [data]);
 
-  const showCharacterData = (id) => {
-    let selectedCharacter = characters.filter((item) => {
-      return item.id === id;
-    });
-
-    setSelectedCharacter(selectedCharacter[0]);
-    setActiveListItem(id);
+  const showCharacterData = (character) => {
+    setSelectedCharacter(character);
+    setActiveListItem(character.id);
   };
 
-  const handleInput = (e) => {
-    if (e.target.value.trim().length > 0) {
-      setInputError(false);
-    }
-    setInputaValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputValue.trim().length === 0) {
-      setInputError(true);
+  const handleInput = (value, filteredArray) => {
+    if (!value) {
+      setCurrentCharacters(characters);
+      setInputValue("");
+      setSelectedCharacter({});
+      setActiveListItem("");
       return;
     }
 
-    const searchResult = characters.filter((item) =>
-      item.name.toLowerCase().includes(inputValue.trim().toLowerCase())
-    );
-
-    if (searchResult.length === 0) {
-      setInputError(true);
-      return;
-    } else {
-      setSelectedCharacter(searchResult[0]);
-      setActiveListItem(searchResult[0].id);
-      setInputaValue("");
-    }
+    setInputValue(value);
+    setCurrentCharacters(filteredArray);
+    setSelectedCharacter({});
+    setActiveListItem("");
   };
 
   if (loading) {
@@ -83,21 +57,22 @@ function App() {
         <Typography variant="h4" component="h1" align="center" sx={{ mb: 4 }}>
           Список людей
         </Typography>
+        <Search
+          characters={characters}
+          onChange={handleInput}
+          inputValue={inputValue}
+          currentCharacters={currentCharacters}
+        />
         <Grid
           container
           spacing={2}
           sx={{ flexDirection: { xs: "column", sm: "row" } }}
         >
           <Grid item xs={12} sm={8} sx={{ order: { xs: 2, sm: 1 } }}>
-            <Search
-              handleInput={handleInput}
-              handleSubmit={handleSubmit}
-              inputValue={inputValue}
-              inputError={inputError}
-            />
             <CharactersList
-              characters={characters}
-              click={showCharacterData}
+              characters={currentCharacters}
+              onClick={showCharacterData}
+              setSelectedCharacter={setSelectedCharacter}
               activeListItem={activeListItem}
             />
           </Grid>
