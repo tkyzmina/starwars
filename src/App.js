@@ -7,6 +7,7 @@ import CharactersList from "./components/characters-list/CharactersList";
 import Loading from "./components/loading/Loading";
 import CharacterInfo from "./components/character-info/CharacterInfo";
 import Search from "./components/search/Search";
+import PagesPagination from "./components/Pagination";
 import { getId } from "./services/utils";
 
 function App() {
@@ -18,8 +19,8 @@ function App() {
   const [activeListItem, setActiveListItem] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => { 
-    const characters = data.map((item) => {          
+  useEffect(() => {
+    const characters = data.map((item) => {
       return { ...item, id: getId(item.url) };
     });
 
@@ -80,6 +81,7 @@ function App() {
             <CharacterInfo character={selectedCharacter} />
           </Grid>
         </Grid>
+        <PagesPagination />
       </Container>
     </div>
   );
