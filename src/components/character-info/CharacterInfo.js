@@ -9,17 +9,23 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
+import { getImgUrl } from "../../services/utils";
 
 function CharacterInfo({ character }) {
-  const { birthYear, eyeColor, height, name, skinColor, id } = character;
+  if (!character) {
+    return;
+  }
+  if (character) {
+    const { birthYear, eyeColor, height, name, skinColor, id } = character;
+    const getCharacterImgUrl = getImgUrl("characters");
+    const image = getCharacterImgUrl(id);
 
-  if (Object.keys(character).length !== 0) {
     return (
       <Card>
         <CardMedia
           component="img"
           height="200"
-          image={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+          image={image}
           alt={name}
           sx={{ objectFit: "contain" }}
         />
@@ -42,7 +48,7 @@ function CharacterInfo({ character }) {
               <ListItemText
                 primary={`Skin Color: ${skinColor.toUpperCase()}`}
               />
-            </ListItem>{" "}
+            </ListItem>
             <Divider />
             <ListItem>
               <ListItemText primary={`Height: ${height.toUpperCase()}`} />

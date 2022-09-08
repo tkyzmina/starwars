@@ -18,7 +18,7 @@ function CharactersList({ characters, onClick, activeListItem }) {
           <Character
             character={character}
             key={character.id}
-            onClick={() => handleClick(character.id)}
+            onClickHandler={() => handleClick(character.id)}
             activeListItem={activeListItem}
           />
         );

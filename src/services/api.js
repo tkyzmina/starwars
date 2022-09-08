@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { characterMapper } from "../mappers/characterMapper";
 
 export const useFetch = (url) => {
   const [data, setData] = useState([]);
@@ -9,18 +10,7 @@ export const useFetch = (url) => {
       setLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      setData(
-        data.results.map((item) => {
-          return {
-            name: item.name,
-            birthYear: item.birth_year,
-            skinColor: item.skin_color,
-            eyeColor: item.eye_color,
-            height: item.height,
-            url: item.url,
-          };
-        })
-      );
+      setData(data.results.map((item) => characterMapper(item)));
       setLoading(false);
     } catch (error) {
       console.log(error);

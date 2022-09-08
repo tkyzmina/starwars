@@ -7,24 +7,24 @@ import CharactersList from "./components/characters-list/CharactersList";
 import Loading from "./components/loading/Loading";
 import CharacterInfo from "./components/character-info/CharacterInfo";
 import Search from "./components/search/Search";
+import { getId } from "./services/utils";
 
 function App() {
   const { loading, data } = useFetch(BASE_URL);
 
   const [characters, setCharacters] = useState([]);
-  const [currentCharacters, setCurrentCharacters] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState({});
+  const [filteredCharacters, setFilteredCharacters] = useState([]);
+  const [selectedCharacter, setSelectedCharacter] = useState();
   const [activeListItem, setActiveListItem] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    const regexp = /(\d+)\//i;
-    const characters = data.map((item) => {
-      const urlNum = item.url.match(regexp)[1];
-      return { ...item, id: urlNum };
+  useEffect(() => { 
+    const characters = data.map((item) => {          
+      return { ...item, id: getId(item.url) };
     });
+
     setCharacters(characters);
-    setCurrentCharacters(characters);
+    setFilteredCharacters(characters);
   }, [data]);
 
   const showCharacterData = (character) => {
@@ -34,16 +34,16 @@ function App() {
 
   const handleInput = (value, filteredArray) => {
     if (!value) {
-      setCurrentCharacters(characters);
+      setFilteredCharacters(characters);
       setInputValue("");
-      setSelectedCharacter({});
+      setSelectedCharacter();
       setActiveListItem("");
       return;
     }
 
     setInputValue(value);
-    setCurrentCharacters(filteredArray);
-    setSelectedCharacter({});
+    setFilteredCharacters(filteredArray);
+    setSelectedCharacter();
     setActiveListItem("");
   };
 
@@ -61,7 +61,7 @@ function App() {
           characters={characters}
           onChange={handleInput}
           inputValue={inputValue}
-          currentCharacters={currentCharacters}
+          currentCharacters={filteredCharacters}
         />
         <Grid
           container
@@ -70,7 +70,7 @@ function App() {
         >
           <Grid item xs={12} sm={8} sx={{ order: { xs: 2, sm: 1 } }}>
             <CharactersList
-              characters={currentCharacters}
+              characters={filteredCharacters}
               onClick={showCharacterData}
               setSelectedCharacter={setSelectedCharacter}
               activeListItem={activeListItem}
