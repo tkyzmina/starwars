@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useReducer } from "react";
 
 import reducer from "./reducer";
-import { SET_LOADING, SET_CHARACTERS } from "./actions";
+import {
+  SET_LOADING,
+  SET_CHARACTERS,
+  CHOOSE_CHARACTER,
+  HANDLE_SEARCH,
+} from "./actions";
 import { BASE_URL } from "./services/api";
 import { characterMapper } from "./mappers/characterMapper";
 import { getId } from "./services/utils";
@@ -9,9 +14,11 @@ import { getId } from "./services/utils";
 const initialState = {
   isLoading: true,
   characters: [],
-  query: "a",
+  character: {},
+  query: "",
   page: 1,
   nbPages: 0,
+  activeListItem: "",
 };
 
 const AppContext = React.createContext();
@@ -39,12 +46,29 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const showCharacterInfo = (character) => {
+    dispatch({
+      type: CHOOSE_CHARACTER,
+      payload: character,
+    });
+  };
+
+  const handleSearch = (query) => {
+    dispatch({
+      type: HANDLE_SEARCH,
+      payload: query,
+      page: 0,
+    });
+  };
+
   useEffect(() => {
     fetchCharacters(`${BASE_URL}=${state.query}`);
-  }, []);
+  }, [state.query]);
 
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, showCharacterInfo, handleSearch }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

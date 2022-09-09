@@ -10,13 +10,16 @@ import {
   Divider,
 } from "@mui/material";
 import { getImgUrl } from "../../services/utils";
+import { useGlobalContext } from "../../context";
 
-function CharacterInfo({ character }) {
-  if (!character) {
+function CharacterInfo() {
+  const { character } = useGlobalContext();
+  const { name, id, birthYear, eyeColor, skinColor, height } = character;
+
+  if (Object.keys(character).length === 0) {
     return;
   }
   if (character) {
-    const { birthYear, eyeColor, height, name, skinColor, id } = character;
     const getCharacterImgUrl = getImgUrl("characters");
     const image = getCharacterImgUrl(id);
 
