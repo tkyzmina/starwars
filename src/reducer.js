@@ -3,6 +3,7 @@ import {
   SET_CHARACTERS,
   CHOOSE_CHARACTER,
   HANDLE_SEARCH,
+  HANDLE_PAGE,
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -23,7 +24,20 @@ const reducer = (state, action) => {
         activeListItem: action.payload.id,
       };
     case HANDLE_SEARCH:
-      return { ...state, query: action.payload };
+      return {
+        ...state,
+        query: action.payload,
+        character: {},
+        activeListItem: "",
+      };
+    case HANDLE_PAGE: {
+      return {
+        ...state,
+        page: action.payload,
+        character: {},
+        activeListItem: "",
+      };
+    }
     default:
       throw new Error(`no matching ${action.type} action type`);
   }

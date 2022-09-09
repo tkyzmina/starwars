@@ -6,6 +6,7 @@ import {
   SET_CHARACTERS,
   CHOOSE_CHARACTER,
   HANDLE_SEARCH,
+  HANDLE_PAGE,
 } from "./actions";
 import { BASE_URL } from "./services/api";
 import { characterMapper } from "./mappers/characterMapper";
@@ -61,12 +62,25 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const handlePage = (value) => {
+    dispatch({
+      type: HANDLE_PAGE,
+      payload: value,
+    });
+  };
+
   useEffect(() => {
-    fetchCharacters(`${BASE_URL}=${state.query}`);
+    fetchCharacters(`${BASE_URL}?search=${state.query}`);
   }, [state.query]);
 
+  useEffect(() => {
+    fetchCharacters(`${BASE_URL}?page=${state.page}`);
+  }, [state.page]);
+
   return (
-    <AppContext.Provider value={{ ...state, showCharacterInfo, handleSearch }}>
+    <AppContext.Provider
+      value={{ ...state, showCharacterInfo, handleSearch, handlePage }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -3,7 +3,7 @@ import { Container, Pagination } from "@mui/material";
 import { useGlobalContext } from "../context";
 
 function PagesPagination() {
-  const { nbPages, page } = useGlobalContext();
+  const { nbPages, page, handlePage } = useGlobalContext();
 
   return (
     <Container sx={{ display: "flex" }}>
@@ -11,7 +11,7 @@ function PagesPagination() {
         sx={{ marginY: 2, marginX: "auto" }}
         count={nbPages}
         page={page}
-        onChange={(_, num) => {}}
+        onChange={(_, num) => {handlePage(num)}}
       />
     </Container>
   );
