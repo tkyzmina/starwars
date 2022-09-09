@@ -1,32 +1,17 @@
-import { BASE_URL } from "./services/api";
-import { useFetch } from "./services/api";
 import { useEffect, useState } from "react";
 import { Typography, Container, Grid } from "@mui/material";
 
 import CharactersList from "./components/characters-list/CharactersList";
-import Loading from "./components/loading/Loading";
 import CharacterInfo from "./components/character-info/CharacterInfo";
 import Search from "./components/search/Search";
 import PagesPagination from "./components/Pagination";
-import { getId } from "./services/utils";
 
 function App() {
-  const { loading, data } = useFetch(BASE_URL);
-
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState();
   const [activeListItem, setActiveListItem] = useState("");
   const [inputValue, setInputValue] = useState("");
-
-  useEffect(() => {
-    const characters = data.map((item) => {
-      return { ...item, id: getId(item.url) };
-    });
-
-    setCharacters(characters);
-    setFilteredCharacters(characters);
-  }, [data]);
 
   const showCharacterData = (character) => {
     setSelectedCharacter(character);
@@ -47,11 +32,6 @@ function App() {
     setSelectedCharacter();
     setActiveListItem("");
   };
-
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="App">
       <Container>
