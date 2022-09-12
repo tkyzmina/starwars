@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Pagination } from "@mui/material";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
 function PagesPagination() {
   const { nbPages, page, handlePage, characters } = useGlobalContext();

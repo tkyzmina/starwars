@@ -2,7 +2,7 @@ import { Typography, Container } from "@mui/material";
 
 import CharactersList from "./components/characters-list/CharactersList";
 import Search from "./components/search/Search";
-import PagesPagination from "./components/Pagination";
+import PagesPagination from "./components/pagination/Pagination";
 
 function App() {
   return (
