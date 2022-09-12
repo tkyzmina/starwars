@@ -1,7 +1,6 @@
 import { Typography, Container } from "@mui/material";
 
 import CharactersList from "./components/characters-list/CharactersList";
-// import CharacterInfo from "./components/character-info/CharacterInfo";
 import Search from "./components/search/Search";
 import PagesPagination from "./components/Pagination";
 
