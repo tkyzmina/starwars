@@ -3,18 +3,23 @@ import { Container, Pagination } from "@mui/material";
 import { useGlobalContext } from "../context";
 
 function PagesPagination() {
-  const { nbPages, page, handlePage } = useGlobalContext();
+  const { nbPages, page, handlePage, characters } = useGlobalContext();
 
-  return (
-    <Container sx={{ display: "flex" }}>
-      <Pagination
-        sx={{ marginY: 2, marginX: "auto" }}
-        count={nbPages}
-        page={page}
-        onChange={(_, num) => {handlePage(num)}}
-      />
-    </Container>
-  );
+  if (characters.length > 0) {
+    return (
+      <Container sx={{ display: "flex" }}>
+        <Pagination
+          sx={{ marginY: 2, marginX: "auto" }}
+          count={nbPages}
+          page={page}
+          boundaryCount={0}
+          onChange={(_, num) => {
+            handlePage(num);
+          }}
+        />
+      </Container>
+    );
+  }
 }
 
 export default PagesPagination;
