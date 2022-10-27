@@ -6,8 +6,6 @@ import { Container, Pagination } from "@mui/material";
 import { charactersActions } from "../../store/characters-slice";
 import { fetchCharacters } from "../../store/characters-actions";
 
-import { BASE_URL } from "../../services/api";
-
 function PagesPagination() {
   const { nbPages, characters, page } = useSelector(
     (state) => state.characters
@@ -19,7 +17,7 @@ function PagesPagination() {
   };
 
   useEffect(() => {
-    dispatch(fetchCharacters(`${BASE_URL}?page=${page}`));
+    dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?page=${page}`));
   }, [page, dispatch]);
 
   if (characters.length > 0) {

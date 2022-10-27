@@ -6,8 +6,6 @@ import { TextField } from "@mui/material";
 import { charactersActions } from "../../store/characters-slice";
 import { fetchCharacters } from "../../store/characters-actions";
 
-import { BASE_URL } from "../../services/api";
-
 function Search() {
   const stateQuery = useSelector((state) => state.characters.query);
 
@@ -18,7 +16,7 @@ function Search() {
   };
 
   useEffect(() => {
-    dispatch(fetchCharacters(`${BASE_URL}?search=${stateQuery}`));
+    dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?search=${stateQuery}`));
   }, [stateQuery, dispatch]);
 
   return (

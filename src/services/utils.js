@@ -1,6 +1,6 @@
 export const getImgUrl = (type, id) => {
   return (id) => {
-    return `https://starwars-visualguide.com/assets/img/${type}/${id}.jpg`;
+    return `${process.env.REACT_APP_IMG_URL}${type}/${id}.jpg`;
   };
 };
 

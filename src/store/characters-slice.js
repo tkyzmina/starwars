@@ -24,12 +24,13 @@ export const charactersSlice = createSlice({
     setSearchQuery(state, actions) {
       state.query = actions.payload.query;
       state.character = {};
-      state.activeListItem='';
+      state.activeListItem = "";
+      state.page = 1;
     },
     setPaginationPage(state, actions) {
       state.page = actions.payload.page;
       state.character = {};
-      state.activeListItem='';
+      state.activeListItem = "";
     },
     toggleLoading(state) {
       state.isLoading = !state.isLoading;

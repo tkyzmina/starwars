@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Typography, Container } from "@mui/material";
 
-import { BASE_URL } from "./services/api";
-
 import { fetchCharacters } from "./store/characters-actions";
 
 import CharactersList from "./components/characters-list/CharactersList";
@@ -14,9 +12,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCharacters(BASE_URL));
+    dispatch(fetchCharacters(process.env.REACT_APP_BASE_URL));
   }, [dispatch]);
-
 
   return (
     <div className="App">
