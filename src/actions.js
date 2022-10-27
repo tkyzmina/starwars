@@ -1,5 +1,0 @@
-export const SET_LOADING = "SET_LOADING";
-export const SET_CHARACTERS = "SET_CHARACTERS";
-export const CHOOSE_CHARACTER = "CHOOSE_CHARACTER";
-export const HANDLE_SEARCH = "HANDLE_SEARCH";
-export const HANDLE_PAGE = "HANDLE_PAGE";

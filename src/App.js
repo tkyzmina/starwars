@@ -1,10 +1,23 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Typography, Container } from "@mui/material";
+
+import { BASE_URL } from "./services/api";
+
+import { fetchCharacters } from "./store/characters-actions";
 
 import CharactersList from "./components/characters-list/CharactersList";
 import Search from "./components/search/Search";
 import PagesPagination from "./components/pagination/Pagination";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCharacters(BASE_URL));
+  }, [dispatch]);
+
+
   return (
     <div className="App">
       <Container>

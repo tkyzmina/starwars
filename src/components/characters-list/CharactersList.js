@@ -1,20 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import { List, Grid } from "@mui/material";
+
 import Character from "../character/Character";
 import CharacterInfo from "../character-info/CharacterInfo";
 import Loading from "../loading/Loading";
 import Notification from "../notification/Notification";
-import { useGlobalContext } from "../../context";
+
 
 function CharactersList() {
-  const { isLoading, characters, showCharacterInfo, activeListItem } =
-    useGlobalContext();
+  const charactersList = useSelector((state) => state.characters.characters);
 
+  const isLoading = useSelector((state) => state.characters.isLoading);
+ 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (characters.length === 0) {
+  if (charactersList.length === 0) {
     return <Notification text="No character found." type="warning" />;
   }
 
@@ -26,15 +30,8 @@ function CharactersList() {
     >
       <Grid item xs={12} sm={8} sx={{ order: { xs: 2, sm: 1 } }}>
         <List>
-          {characters.map((character) => {
-            return (
-              <Character
-                character={character}
-                key={character.id}
-                onClickHandler={() => showCharacterInfo(character)}
-                activeListItem={activeListItem}
-              />
-            );
+          {charactersList.map((character) => {
+            return <Character character={character} key={character.id} />;
           })}
         </List>
       </Grid>

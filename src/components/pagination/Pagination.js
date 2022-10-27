@@ -1,9 +1,26 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import { Container, Pagination } from "@mui/material";
-import { useGlobalContext } from "../../context";
+
+import { charactersActions } from "../../store/characters-slice";
+import { fetchCharacters } from "../../store/characters-actions";
+
+import { BASE_URL } from "../../services/api";
 
 function PagesPagination() {
-  const { nbPages, page, handlePage, characters } = useGlobalContext();
+  const { nbPages, characters, page } = useSelector(
+    (state) => state.characters
+  );
+  const dispatch = useDispatch();
+
+  const handlePage = (page) => {
+    dispatch(charactersActions.setPaginationPage({ page }));
+  };
+
+  useEffect(() => {
+    dispatch(fetchCharacters(`${BASE_URL}?page=${page}`));
+  }, [page, dispatch]);
 
   if (characters.length > 0) {
     return (

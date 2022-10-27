@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Typography,
   Card,
@@ -10,10 +11,9 @@ import {
   Divider,
 } from "@mui/material";
 import { getImgUrl } from "../../services/utils";
-import { useGlobalContext } from "../../context";
 
 function CharacterInfo() {
-  const { character } = useGlobalContext();
+  const character = useSelector((state) => state.characters.character);
   const { name, id, birthYear, eyeColor, skinColor, height } = character;
 
   if (Object.keys(character).length === 0) {
