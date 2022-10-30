@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Pagination } from "@mui/material";
 
 import { charactersActions } from "../../store/characters-slice";
-import { fetchCharacters } from "../../store/characters-actions";
+// import { fetchCharacters } from "../../store/characters-actions";
 
 function PagesPagination() {
   const { nbPages, characters, page } = useSelector(
@@ -16,9 +16,9 @@ function PagesPagination() {
     dispatch(charactersActions.setPaginationPage({ page }));
   };
 
-  useEffect(() => {
-    dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?page=${page}`));
-  }, [page, dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?page=${page}`));
+  // }, [page, dispatch]);
 
   if (characters.length > 0) {
     return (

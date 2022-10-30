@@ -8,7 +8,7 @@ export const fetchCharacters = (url) => {
         const response = await fetch(url);
   
         if (!response.ok) {
-          throw new Error("Could not fetch cart data.");
+          throw new Error("Could not fetch characters data.");
         }
   
         dispatch(charactersActions.toggleLoading());

@@ -15,16 +15,16 @@ function Search() {
     dispatch(charactersActions.setSearchQuery({ query }));
   };
 
-  useEffect(() => {
-    dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?search=${stateQuery}`));
-  }, [stateQuery, dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCharacters(`${process.env.REACT_APP_BASE_URL}?search=${stateQuery}`));
+  // }, [stateQuery, dispatch]);
 
   return (
     <>
       <TextField
         sx={{ width: 1, mb: 2 }}
         type="search"
-        value={stateQuery}
+        // value={stateQuery}
         onChange={(e) => handleSearch(e.target.value)}
         label="Search character"
       />
